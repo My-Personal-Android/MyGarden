@@ -2,6 +2,7 @@ package com.mygarden.ui;
 
 import android.content.ContentValues;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,7 +15,12 @@ import com.mygarden.R;
 import com.mygarden.ui.PlantTypesAdapter;
 import com.mygarden.provider.PlantContract;
 
+// done
+//
+// Warning
+// dont change the index of ARRAYS plant types
 public class AddPlantActivity extends AppCompatActivity {
+
     private RecyclerView mTypesRecyclerView;
     private PlantTypesAdapter mTypesAdapter;
 
@@ -26,6 +32,7 @@ public class AddPlantActivity extends AppCompatActivity {
         // Plant types are displayed as a recycler view using PlantTypesAdapter
         mTypesAdapter = new PlantTypesAdapter(this);
         mTypesRecyclerView = (RecyclerView) findViewById(R.id.plant_types_recycler_view);
+
         mTypesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         );
@@ -33,18 +40,16 @@ public class AddPlantActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Event handler to handle clicking on a plant type
-     *
-     * @param view
-     */
     public void onPlantTypeClick(View view) {
         // When the chosen plant type is clicked, create a new plant and set the creation time and
         // water time to now
         // Extract the plant type from the tag
         ImageView imgView = (ImageView) view.findViewById(R.id.plant_type_image);
         int plantType = (int) imgView.getTag();
+
+        Log.v("Hello plant",plantType+"");
         long timeNow = System.currentTimeMillis();
+
         // Insert the new plant into DB
         ContentValues contentValues = new ContentValues();
         contentValues.put(PlantContract.PlantEntry.COLUMN_PLANT_TYPE, plantType);
@@ -52,6 +57,7 @@ public class AddPlantActivity extends AppCompatActivity {
         contentValues.put(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME, timeNow);
         getContentResolver().insert(PlantContract.PlantEntry.CONTENT_URI, contentValues);
         PlantWateringService.startActionUpdatePlantWidgets(this);
+
         // Close this activity
         finish();
     }

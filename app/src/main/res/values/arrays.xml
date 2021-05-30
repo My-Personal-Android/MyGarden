@@ -19,8 +19,9 @@ String type = plantTypes.getString(0); // this will return "vine"
 -->
 
 <resources>
+    // warning DONOT change the index of below these PLANT TYPES/SEQUENCE   otherwise it will change the data overall
     <array name="plant_types">
-        <item>vine</item>
-        <item>cactus</item>
+        <item>vine</item> // 0 index
+        <item>cactus</item> // 1 index
     </array>
 </resources>

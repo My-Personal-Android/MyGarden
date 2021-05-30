@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mygarden.R;
-import com.mygarden.ui.AddPlantActivity;
 
 import static com.mygarden.provider.PlantContract.BASE_CONTENT_URI;
 import static com.mygarden.provider.PlantContract.PATH_PLANTS;
 import static com.mygarden.provider.PlantContract.PlantEntry;
 
+// done
 public class MainActivity
         extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -49,13 +49,13 @@ public class MainActivity
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Uri PLANT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLANTS).build();
+        //Uri PLANT_URI = PlantEntry.CONTENT_URI;
         return new CursorLoader(this, PLANT_URI, null,
                 null, null, PlantEntry.COLUMN_CREATION_TIME);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-
         cursor.moveToFirst();
         mAdapter.swapCursor(cursor);
     }
@@ -65,6 +65,7 @@ public class MainActivity
 
     }
 
+    // done
     public void onPlantClick(View view) {
         ImageView imgView = (ImageView) view.findViewById(R.id.plant_list_item_image);
         long plantId = (long) imgView.getTag();
@@ -74,6 +75,7 @@ public class MainActivity
     }
 
 
+    // done
     public void onAddFabClick(View view) {
         Intent intent = new Intent(this, AddPlantActivity.class);
         startActivity(intent);

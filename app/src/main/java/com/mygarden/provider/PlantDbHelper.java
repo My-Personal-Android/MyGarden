@@ -6,10 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.mygarden.provider.PlantContract.PlantEntry;
 
+// done
 public class PlantDbHelper extends SQLiteOpenHelper {
 
     // The database name
-    private static final String DATABASE_NAME = "shushme.db";
+    private static final String DATABASE_NAME = "plants.db";
 
     // If you change the database schema, you must increment the database version
     private static final int DATABASE_VERSION = 1;

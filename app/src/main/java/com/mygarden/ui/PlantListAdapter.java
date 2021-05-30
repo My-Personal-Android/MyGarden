@@ -14,28 +14,18 @@ import com.mygarden.R;
 import com.mygarden.provider.PlantContract.PlantEntry;
 import com.mygarden.utils.PlantUtils;
 
+// done
 public class PlantListAdapter extends RecyclerView.Adapter<PlantListAdapter.PlantViewHolder> {
 
     private Context mContext;
     private Cursor mCursor;
 
-    /**
-     * Constructor using the context and the db cursor
-     *
-     * @param context the calling context/activity
-     */
     public PlantListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
         this.mCursor = cursor;
     }
 
-    /**
-     * Called when RecyclerView needs a new ViewHolder of the given type to represent an item
-     *
-     * @param parent   The ViewGroup into which the new View will be added
-     * @param viewType The view type of the new View
-     * @return A new PlantViewHolder that holds a View with the plant_list_item layout
-     */
+
     @Override
     public PlantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Get the RecyclerView item layout
@@ -48,6 +38,7 @@ public class PlantListAdapter extends RecyclerView.Adapter<PlantListAdapter.Plan
     public void onBindViewHolder(PlantViewHolder holder, int position) {
 
         mCursor.moveToPosition(position);
+
         int idIndex = mCursor.getColumnIndex(PlantEntry._ID);
         int createTimeIndex = mCursor.getColumnIndex(PlantEntry.COLUMN_CREATION_TIME);
         int waterTimeIndex = mCursor.getColumnIndex(PlantEntry.COLUMN_LAST_WATERED_TIME);
@@ -67,7 +58,8 @@ public class PlantListAdapter extends RecyclerView.Adapter<PlantListAdapter.Plan
     }
 
     public void swapCursor(Cursor newCursor) {
-        if (mCursor != null) {
+
+        if (mCursor != null && mCursor != newCursor) {
             mCursor.close();
         }
         mCursor = newCursor;
@@ -77,20 +69,12 @@ public class PlantListAdapter extends RecyclerView.Adapter<PlantListAdapter.Plan
         }
     }
 
-    /**
-     * Returns the number of items in the cursor
-     *
-     * @return Number of items in the cursor, or 0 if null
-     */
     @Override
     public int getItemCount() {
         if (mCursor == null) return 0;
         return mCursor.getCount();
     }
 
-    /**
-     * PlantViewHolder class for the recycler view item
-     */
     class PlantViewHolder extends RecyclerView.ViewHolder {
 
         ImageView plantImageView;

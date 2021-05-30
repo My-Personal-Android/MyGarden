@@ -6,7 +6,9 @@ import android.content.res.TypedArray;
 
 import com.mygarden.R;
 
-
+// Custom Helper Methods Live Here
+//
+// done
 public class PlantUtils {
 
     private static final long MINUTE_MILLISECONDS = 1000 * 60;
@@ -29,65 +31,53 @@ public class PlantUtils {
 
     ;
 
-    /**
-     * Returns the corresponding image resource of the plant given the plant's age and
-     * time since it was last watered
-     *
-     * @param plantAge Time (in milliseconds) the plant has been alive
-     * @param waterAge Time (in milliseconds) since it was last watered
-     * @return Image Resource to the correct plant image
-     */
+
+    //done
     public static int getPlantImageRes(Context context, long plantAge, long waterAge, int type) {
         //check if plant is dead first
-        PlantStatus status = PlantStatus.ALIVE;
-        if (waterAge > MAX_AGE_WITHOUT_WATER) status = PlantStatus.DEAD;
-        else if (waterAge > DANGER_AGE_WITHOUT_WATER) status = PlantStatus.DYING;
+        PlantStatus status = PlantStatus.ALIVE; // planted or watered in recently 6 hours
+
+        if (waterAge > MAX_AGE_WITHOUT_WATER) status = PlantStatus.DEAD; // plants die after 12 hours
+        else if (waterAge > DANGER_AGE_WITHOUT_WATER) status = PlantStatus.DYING; // in danger after 6 hours
 
         //Update image if old enough
-        if (plantAge > FULLY_GROWN_AGE) {
+        if (plantAge > FULLY_GROWN_AGE) { // 2 days old
             return getPlantImgRes(context, type, status, PlantSize.FULLY_GROWN);
-        } else if (plantAge > JUVENILE_AGE) {
+        } else if (plantAge > JUVENILE_AGE) { // 1 day old
             return getPlantImgRes(context, type, status, PlantSize.JUVENILE);
-        } else if (plantAge > TINY_AGE) {
+        } else if (plantAge > TINY_AGE) { // plants start tiny
             return getPlantImgRes(context, type, status, PlantSize.TINY);
         } else {
             return R.drawable.empty_pot;
         }
     }
 
-    /**
-     * Returns the corresponding image resource of the plant given the plant's type, status and
-     * size (age category)
-     *
-     * @param context The context
-     * @param type    The plant type (starts from 0 and corresponds to the index to the item in arrays.xml)
-     * @param status  The PlantStatus
-     * @param size    The PlantSize
-     * @return Image Resource to the correct plant image
-     */
+    // done
     public static int getPlantImgRes(Context context, int type, PlantStatus status, PlantSize size) {
+
         Resources res = context.getResources();
+
         TypedArray plantTypes = res.obtainTypedArray(R.array.plant_types);
         String resName = plantTypes.getString(type);
+
         if (status == PlantStatus.DYING) resName += "_danger";
         else if (status == PlantStatus.DEAD) resName += "_dead";
-        if (size == PlantSize.TINY) resName += "_1";
+
+        if (size == PlantSize.TINY) resName += "_1"; // default value concatenate
         else if (size == PlantSize.JUVENILE) resName += "_2";
         else if (size == PlantSize.FULLY_GROWN) resName += "_3";
+
         return context.getResources().getIdentifier(resName, "drawable", context.getPackageName());
     }
 
-    /**
-     * Returns the plant type display name based on the type index from the string resources
-     *
-     * @param context The context
-     * @param type    The plant type (starts from 0 and corresponds to the index to the item in arrays.xml)
-     * @return The plant type display name
-     */
+    // done
     public static String getPlantTypeName(Context context, int type) {
+
         Resources res = context.getResources();
         TypedArray plantTypes = res.obtainTypedArray(R.array.plant_types);
+
         String resName = plantTypes.getString(type);
+
         int resId = context.getResources().getIdentifier(resName, "string", context.getPackageName());
         try {
             return context.getResources().getString(resId);
@@ -96,32 +86,30 @@ public class PlantUtils {
         }
     }
 
-    /**
-     * Converts the age in milli seconds to a displayable format (days, hours or minutes)
-     *
-     * @param milliSeconds The age in milli seconds
-     * @return The value of either days, hours or minutes
-     */
+    // done
     public static int getDisplayAgeInt(long milliSeconds) {
+
         int days = (int) (milliSeconds / DAY_MILLISECONDS);
-        if (days >= 1) return days;
+        if (days >= 1)
+            return days;
+
         int hours = (int) (milliSeconds / HOUR_MILLISECONDS);
-        if (hours >= 1) return hours;
+        if (hours >= 1)
+            return hours;
+
         return (int) (milliSeconds / MINUTE_MILLISECONDS);
     }
 
-    /**
-     * Converts the age in milli seconds to a displayable format (days, hours or minutes)
-     *
-     * @param context      The context
-     * @param milliSeconds The age in milli seconds
-     * @return The unit of either days, hours or minutes
-     */
+    // done
     public static String getDisplayAgeUnit(Context context, long milliSeconds) {
+
         int days = (int) (milliSeconds / DAY_MILLISECONDS);
-        if (days >= 1) return context.getString(R.string.days);
+        if (days >= 1)
+            return context.getString(R.string.days);
+
         int hours = (int) (milliSeconds / HOUR_MILLISECONDS);
         if (hours >= 1) return context.getString(R.string.hours);
+
         return context.getString(R.string.minutes);
     }
 }

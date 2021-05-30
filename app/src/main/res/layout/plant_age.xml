@@ -19,7 +19,7 @@
         android:layout_centerVertical="true"
         android:textSize="40sp"
         android:textStyle="bold"
-        tools:text="23" />
+        tools:text="137" />
 
     <TextView
         android:id="@+id/plant_age_unit"
@@ -30,6 +30,7 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="-8dp"
         android:textSize="16sp"
+        android:textStyle="bold"
         tools:text="days" />
 
 </RelativeLayout>

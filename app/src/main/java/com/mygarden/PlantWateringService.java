@@ -23,9 +23,9 @@ import static com.mygarden.provider.PlantContract.PATH_PLANTS;
  */
 public class PlantWateringService extends IntentService {
 
-    public static final String ACTION_WATER_PLANT = "com.example.android.mygarden.action.water_plant";
-    public static final String ACTION_UPDATE_PLANT_WIDGETS = "com.example.android.mygarden.action.update_plant_widgets";
-    public static final String EXTRA_PLANT_ID = "com.example.android.mygarden.extra.PLANT_ID";;
+    public static final String ACTION_WATER_PLANT = "com.mygarden.action.water_plant";
+    public static final String ACTION_UPDATE_PLANT_WIDGETS = "com.mygarden.action.update_plant_widgets";
+    public static final String EXTRA_PLANT_ID = "com.mygarden.extra.PLANT_ID";;
 
     public PlantWateringService() {
         super("PlantWateringService");

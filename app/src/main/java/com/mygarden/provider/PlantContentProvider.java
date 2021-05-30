@@ -17,6 +17,7 @@ import java.util.Arrays;
 import static com.mygarden.provider.PlantContract.PlantEntry;
 
 
+// done
 public class PlantContentProvider extends ContentProvider {
 
     // Define final integer constants for the directory of plants and a single item.
@@ -49,13 +50,6 @@ public class PlantContentProvider extends ContentProvider {
         return true;
     }
 
-    /***
-     * Handles requests to insert a single new row of data
-     *
-     * @param uri
-     * @param values
-     * @return
-     */
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         final SQLiteDatabase db = mPlantDbHelper.getWritableDatabase();
@@ -85,16 +79,6 @@ public class PlantContentProvider extends ContentProvider {
         return returnUri;
     }
 
-    /***
-     * Handles requests for data by URI
-     *
-     * @param uri
-     * @param projection
-     * @param selection
-     * @param selectionArgs
-     * @param sortOrder
-     * @return
-     */
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
@@ -139,14 +123,6 @@ public class PlantContentProvider extends ContentProvider {
         return retCursor;
     }
 
-    /***
-     * Deletes a single row of data
-     *
-     * @param uri
-     * @param selection
-     * @param selectionArgs
-     * @return number of rows affected
-     */
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         // Get access to the database and write URI matching code to recognize a single item
@@ -174,14 +150,6 @@ public class PlantContentProvider extends ContentProvider {
         return plantsDeleted;
     }
 
-    /***
-     * Updates a single row of data
-     *
-     * @param uri
-     * @param selection
-     * @param selectionArgs
-     * @return number of rows affected
-     */
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
@@ -196,18 +164,24 @@ public class PlantContentProvider extends ContentProvider {
                 plantsUpdated = db.update(PlantEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             case PLANT_WITH_ID:
-                if (selection == null) selection = PlantEntry._ID + "=?";
-                else selection += " AND " + PlantEntry._ID + "=?";
+                if (selection == null)
+                    selection = PlantEntry._ID + "=?";
+                else
+                    selection += " AND " + PlantEntry._ID + "=?";
+
                 // Get the place ID from the URI path
                 String id = uri.getPathSegments().get(1);
+
                 // Append any existing selection options to the ID filter
-                if (selectionArgs == null) selectionArgs = new String[]{id};
+                if (selectionArgs == null)
+                    selectionArgs = new String[]{id};
                 else {
                     ArrayList<String> selectionArgsList = new ArrayList<String>();
                     selectionArgsList.addAll(Arrays.asList(selectionArgs));
                     selectionArgsList.add(id);
                     selectionArgs = selectionArgsList.toArray(new String[selectionArgsList.size()]);
                 }
+
                 plantsUpdated = db.update(PlantEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             // Default exception

@@ -1,7 +1,6 @@
 package com.mygarden.ui;
 
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,11 +21,12 @@ import com.mygarden.utils.PlantUtils;
 import static com.mygarden.provider.PlantContract.BASE_CONTENT_URI;
 import static com.mygarden.provider.PlantContract.PATH_PLANTS;
 
+// done
 public class PlantDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int SINGLE_LOADER_ID = 200;
-    public static final String EXTRA_PLANT_ID = "com.example.android.mygarden.extra.PLANT_ID";
+    public static final String EXTRA_PLANT_ID = "com.mygarden.extra.PLANT_ID";
     long mPlantId;
 
     @Override
@@ -38,6 +38,7 @@ public class PlantDetailActivity extends AppCompatActivity
         getSupportLoaderManager().initLoader(SINGLE_LOADER_ID, null, this);
     }
 
+    // done
     public void onBackButtonClick(View view) {
         finish();
     }
@@ -56,8 +57,12 @@ public class PlantDetailActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if (cursor == null || cursor.getCount() < 1) return;
+
+        if (cursor == null || cursor.getCount() < 1)
+            return;
+
         cursor.moveToFirst();
+
         int createTimeIndex = cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_CREATION_TIME);
         int waterTimeIndex = cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME);
         int planTypeIndex = cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_PLANT_TYPE);
@@ -70,21 +75,28 @@ public class PlantDetailActivity extends AppCompatActivity
         int plantImgRes = PlantUtils.getPlantImageRes(this, timeNow - createdAt, timeNow - wateredAt, plantType);
 
         ((ImageView) findViewById(R.id.plant_detail_image)).setImageResource(plantImgRes);
+
         ((TextView) findViewById(R.id.plant_detail_name)).setText(String.valueOf(mPlantId));
+
         ((TextView) findViewById(R.id.plant_age_number)).setText(
                 String.valueOf(PlantUtils.getDisplayAgeInt(timeNow - createdAt))
         );
+
         ((TextView) findViewById(R.id.plant_age_unit)).setText(
                 PlantUtils.getDisplayAgeUnit(this, timeNow - createdAt)
         );
+
         ((TextView) findViewById(R.id.last_watered_number)).setText(
                 String.valueOf(PlantUtils.getDisplayAgeInt(timeNow - wateredAt))
         );
+
         ((TextView) findViewById(R.id.last_watered_unit)).setText(
                 PlantUtils.getDisplayAgeUnit(this, timeNow - wateredAt)
         );
+
         int waterPercent = 100 - ((int) (100 * (timeNow - wateredAt) / PlantUtils.MAX_AGE_WITHOUT_WATER));
         ((WaterLevelView) findViewById(R.id.water_level)).setValue(waterPercent);
+
     }
 
     @Override
@@ -92,6 +104,7 @@ public class PlantDetailActivity extends AppCompatActivity
 
     }
 
+    // done
     public void onCutButtonClick(View view) {
         Uri SINGLE_PLANT_URI = ContentUris.withAppendedId(
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLANTS).build(), mPlantId);

@@ -3,6 +3,7 @@ package com.mygarden.ui;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,29 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mygarden.utils.PlantUtils;
 import com.mygarden.R;
 
+// done
 public class PlantTypesAdapter extends RecyclerView.Adapter<PlantTypesAdapter.PlantViewHolder> {
 
     Context mContext;
     TypedArray mPlantTypes;
 
-    /**
-     * Constructor using the context and the db cursor
-     *
-     * @param context the calling context/activity
-     */
     public PlantTypesAdapter(Context context) {
         mContext = context;
         Resources res = mContext.getResources();
         mPlantTypes = res.obtainTypedArray(R.array.plant_types);
     }
 
-    /**
-     * Called when RecyclerView needs a new ViewHolder of the given type to represent an item
-     *
-     * @param parent   The ViewGroup into which the new View will be added
-     * @param viewType The view type of the new View
-     * @return A new PlantViewHolder that holds a View with the plant_list_item layout
-     */
     @Override
     public PlantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Get the RecyclerView item layout
@@ -54,22 +44,17 @@ public class PlantTypesAdapter extends RecyclerView.Adapter<PlantTypesAdapter.Pl
         holder.plantImageView.setImageResource(imgRes);
         holder.plantTypeText.setText(PlantUtils.getPlantTypeName(mContext, position));
         holder.plantImageView.setTag(position);
+        Log.v("Hello",position+"");
     }
 
-    /**
-     * Returns the number of items in the cursor
-     *
-     * @return Number of items in the cursor, or 0 if null
-     */
+
     @Override
     public int getItemCount() {
         if (mPlantTypes == null) return 0;
         return mPlantTypes.length();
     }
 
-    /**
-     * PlantViewHolder class for the recycler view item
-     */
+
     class PlantViewHolder extends RecyclerView.ViewHolder {
 
         ImageView plantImageView;
