@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.mygarden.PlantWateringService;
 import com.mygarden.R;
 import com.mygarden.ui.PlantTypesAdapter;
 import com.mygarden.provider.PlantContract;
+import com.mygarden.utils.PlantUtils;
 
 // done
 //
@@ -41,6 +43,7 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     public void onPlantTypeClick(View view) {
+
         // When the chosen plant type is clicked, create a new plant and set the creation time and
         // water time to now
         // Extract the plant type from the tag
@@ -55,8 +58,12 @@ public class AddPlantActivity extends AppCompatActivity {
         contentValues.put(PlantContract.PlantEntry.COLUMN_PLANT_TYPE, plantType);
         contentValues.put(PlantContract.PlantEntry.COLUMN_CREATION_TIME, timeNow);
         contentValues.put(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME, timeNow);
+
         getContentResolver().insert(PlantContract.PlantEntry.CONTENT_URI, contentValues);
+
         PlantWateringService.startActionUpdatePlantWidgets(this);
+
+        Toast.makeText(getApplicationContext(),"Plant of type "+ PlantUtils.getPlantTypeName(getApplicationContext(),plantType) +" Added Successfully ..!",Toast.LENGTH_SHORT).show();
 
         // Close this activity
         finish();
